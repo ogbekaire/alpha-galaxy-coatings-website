@@ -1,0 +1,32 @@
+name: Unpack audited site
+
+on:
+  push:
+    paths:
+      - '.github/workflows/unpack-site.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack audited website
+        run: |
+          set -e
+          test -f alpha-galaxy-coatings-audited-bilingual-secure.zip
+          rm -rf /tmp/alpha-site
+          mkdir -p /tmp/alpha-site
+          unzip -q alpha-galaxy-coatings-audited-bilingual-secure.zip -d /tmp/alpha-site
+          test -f /tmp/alpha-site/alpha-galaxy-site/index.html
+          cp -a /tmp/alpha-site/alpha-galaxy-site/. .
+          rm -f alpha-galaxy-coatings-audited-bilingual-secure.zip
+      - name: Commit unpacked site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Unpack audited bilingual website"
+          git push
