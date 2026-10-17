@@ -1,6 +1,7 @@
 name: Unpack audited site
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/unpack-site.yml'
