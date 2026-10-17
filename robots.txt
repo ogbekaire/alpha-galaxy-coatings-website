@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alphagalaxycoatings.com/sitemap.xml
